@@ -1,18 +1,21 @@
-
+#include "Expression.h"
 #include <string>
-
-using namespace std;
 
 #ifndef ARITHMETICEXPRESSION_H_
 #define ARITHMETICEXPRESSION_H_
 
-class ArithmeticExpression : public Expression{
-	Expression *left;
-	Expression *right;
-	string evaluate (){ //evaluate left expression and right expression
-	void print(); // prints expression…
-	}
-	float convert (string s){ // Converts a string (as would be returned by evaluate) to a float
-	}
-}
+using namespace std;
+
+class ArithmeticExpression : public Expression {
+    public:
+        //Expression *left;
+        //Expression *right;
+
+        ArithmeticExpression();
+        string evaluate (); //evaluate left expression and right expression
+        void print();
+        float convert (string);
+        virtual ~ArithmeticExpression();
+    private:
+};
 #endif

@@ -1,14 +1,17 @@
+#include "ArithmeticExpression.h"
 #include <string>
 
 #ifndef ADD_H_
 #define ADD_H_
 
-class Add: public ArithmeticExpression{
-	string evaluate(){
+using namespace std;
 
-	}
-	void print(){
-
-	} // (left `+` right)
-}
+class Add : public ArithmeticExpression {
+    public:
+        Add();
+        //string evaluate();
+        //void print();
+        virtual ~Add();
+    private:
+};
 #endif

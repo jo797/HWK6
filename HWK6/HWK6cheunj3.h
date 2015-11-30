@@ -1,12 +1,7 @@
-/*
- * HWK6cheunj3.h
- *
- *  Created on: Nov 28, 2015
- *      Author: Joletta
- */
-
 #ifndef HWK6CHEUNJ3_H_
 #define HWK6CHEUNJ3_H_
+
+using namespace std;
 
 class HWK6_cheunj3 {
 public:
