@@ -2,11 +2,17 @@
 
 using namespace std;
 
+Expression::Expression() {
+    (*this).exp = "";
+}
+
 Expression::Expression(string s) {
-    exp = s;
+    (*this).exp = s;
 }
 
 string Expression::evaluate(){
+    cout << "lol" << (*this).exp << endl;
+    return "";
 }
 
 void Expression::print(){

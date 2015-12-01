@@ -16,8 +16,9 @@ int main () {
     while (input != "#"){
         cout << "Please enter an expression: ";
         cin >> input;
-        Expression exp = new Expression(input);
+        Expression exp {input};
         exp.evaluate();
+        cout << "Finished" << endl;
     }
 
 	return 0;

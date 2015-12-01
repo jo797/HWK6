@@ -10,6 +10,7 @@ class Expression {
     public:
         string exp;
 
+        Expression();
         Expression(string);
         string evaluate(); // evaluate expression and return string representation of the result.
         void print(); // prints expression

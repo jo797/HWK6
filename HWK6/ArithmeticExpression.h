@@ -12,8 +12,8 @@ class ArithmeticExpression : public Expression {
         Expression *left;
         Expression *right;
 
-        ArithmeticExpression(string, string);
-        string evaluate (); //evaluate left expression and right expression
+        ArithmeticExpression();
+        string evaluate(); //evaluate left expression and right expression
         void print();
         float convert (string);
         virtual ~ArithmeticExpression();
