@@ -8,10 +8,8 @@ using namespace std;
 
 class Subtract: public ArithmeticExpression{
     public:
-        Subtract();
         string evaluate();
         void print();
-        virtual ~Subtract();
 	private:
 };
 #endif

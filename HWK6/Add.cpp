@@ -1,11 +1,9 @@
-#include <iostream>
 #include "Add.h"
 
-Add::Add() {
+string Add::evaluate(){
 
 }
 
-Add::~Add() {
+void Add::print(){
 
 }
-

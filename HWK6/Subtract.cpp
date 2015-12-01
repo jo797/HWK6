@@ -1,18 +1,7 @@
-/*
- * Subtract.cpp
- *
- *  Created on: Nov 28, 2015
- *      Author: Joletta
- */
-
 #include "Subtract.h"
 
-Subtract::Subtract() {
-	// TODO Auto-generated constructor stub
-
+string Subtract::evaluate(){
 }
 
-Subtract::~Subtract() {
-	// TODO Auto-generated destructor stub
+void Subtract::print(){
 }
-

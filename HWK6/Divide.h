@@ -8,10 +8,8 @@ using namespace std;
 
 class Divide: public ArithmeticExpression {
     public:
-        Divide();
         string evaluate();
         void print();
-        virtual ~Divide();
     private:
 };
 #endif

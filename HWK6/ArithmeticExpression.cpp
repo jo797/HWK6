@@ -3,10 +3,19 @@
 
 using namespace std;
 
-ArithmeticExpression::ArithmeticExpression(){
+ArithmeticExpression::ArithmeticExpression(string L, string R) {
 
 }
 
-ArithmeticExpression::~ArithmeticExpression(){
+string ArithmeticExpression::evaluate (){//evaluate left expression and right expression
+}
+
+void ArithmeticExpression::print(){
+}
+
+float ArithmeticExpression::convert (string){
+}
+
+ArithmeticExpression::~ArithmeticExpression() {
 
 }

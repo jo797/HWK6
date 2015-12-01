@@ -7,11 +7,12 @@
 using namespace std;
 
 class ArithmeticExpression : public Expression {
-    public:
-        //Expression *left;
-        //Expression *right;
 
-        ArithmeticExpression();
+    public:
+        Expression *left;
+        Expression *right;
+
+        ArithmeticExpression(string, string);
         string evaluate (); //evaluate left expression and right expression
         void print();
         float convert (string);

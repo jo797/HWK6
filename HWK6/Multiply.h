@@ -8,10 +8,8 @@ using namespace std;
 
 class Multiply: public ArithmeticExpression{
     public:
-        Multiply();
         string evaluate();
         void print();
-        virtual ~Multiply();
 	private:
 };
 #endif

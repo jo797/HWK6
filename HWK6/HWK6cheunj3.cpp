@@ -6,10 +6,19 @@
 */
 
 #include <iostream>
+#include "Expression.h"
 
 using namespace std;
 
 int main () {
+    string input = "";
+
+    while (input != "#"){
+        cout << "Please enter an expression: ";
+        cin >> input;
+        Expression exp = new Expression(input);
+        exp.evaluate();
+    }
 
 	return 0;
 }

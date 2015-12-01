@@ -8,10 +8,8 @@ using namespace std;
 
 class Add : public ArithmeticExpression {
     public:
-        Add();
-        //string evaluate();
-        //void print();
-        virtual ~Add();
+        string evaluate();
+        void print();
     private:
 };
 #endif
