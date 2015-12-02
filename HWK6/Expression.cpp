@@ -11,7 +11,7 @@ Expression::Expression(string s) {
 }
 
 string Expression::evaluate(){
-    cout << "lol" << (*this).exp << endl;
+    cout << "Evaluating " << (*this).exp << endl;
     return "";
 }
 

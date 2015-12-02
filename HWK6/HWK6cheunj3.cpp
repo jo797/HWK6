@@ -6,7 +6,7 @@
 */
 
 #include <iostream>
-#include "Expression.h"
+#include "ArithmeticExpression.h"
 
 using namespace std;
 
@@ -16,9 +16,14 @@ int main () {
     while (input != "#"){
         cout << "Please enter an expression: ";
         cin >> input;
-        Expression exp {input};
-        exp.evaluate();
-        cout << "Finished" << endl;
+        ArithmeticExpression exp {input};
+        try{
+            exp.parse();
+            exp.evaluate();
+            exp.print();
+        } catch (const invalid_argument& e) {
+            cout << "Error parsing input: " << e.what() << endl;
+        }
     }
 
 	return 0;
