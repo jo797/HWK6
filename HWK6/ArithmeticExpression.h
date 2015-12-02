@@ -22,5 +22,7 @@ class ArithmeticExpression : public Expression {
         virtual ~ArithmeticExpression();
     private:
         void parseBrackets();
+        void parseExpression(string);
+        bool checkCharIs(char, string);
 };
 #endif

@@ -14,7 +14,15 @@ ArithmeticExpression::ArithmeticExpression(string s) : Expression::Expression(s)
 }
 
 bool ArithmeticExpression::parse(){
-    parseBrackets();
+    parseBrackets(); //BEDMAS
+    parseExpression("/");
+    parseExpression("*");
+    parseExpression("+");
+    parseExpression("-");
+    /*parseDivision();
+    parseMultiplication();
+    parseAddition();
+    parseSubtraction();*/
     return true;
 }
 
@@ -56,6 +64,62 @@ void ArithmeticExpression::parseBrackets(){
     }
 }
 
+void ArithmeticExpression::parseExpression(string obj){
+    string lef = "", rig = "";
+    size_t findPlace = exp.find(obj);
+    if (findPlace != string::npos){
+        cout << "Find place: " << findPlace << endl;
+        for (unsigned int i = findPlace+1;i < exp.length();i++){
+            if (!checkCharIs(exp[i], "()/*+-")){
+                rig += exp[i];
+            } else {
+                break;
+            }
+        }
+        for (int i = (int)(findPlace-1);i > -1;i--){
+            if (!checkCharIs(exp[i], "()/*+-")){
+                lef += exp[i];
+            } else {
+                break;
+            }
+        }
+    }
+    //cout << "FUCK" << lef << obj << rig << endl;
+    if (lef == "" && rig == ""){
+        cout << "Could not find any " << obj << endl;
+    } else {
+        cout << lef << obj << rig << endl;
+    }
+}
+/*
+void ArithmeticExpression::parseDivision(){
+    string lef = "", rig = "";
+    if (exp.find("/") != string::npos){
+
+    }
+}
+
+void ArithmeticExpression::parseMultiplication(){
+    string lef = "", rig = "";
+    if (exp.find("*") != string::npos){
+
+    }
+}
+
+void ArithmeticExpression::parseAddition(){
+    string lef = "", rig = "";
+    if (exp.find("+") != string::npos){
+
+    }
+}
+
+void ArithmeticExpression::parseSubtraction(){
+    string lef = "", rig = "";
+    if (exp.find("-") != string::npos){
+
+    }
+}*/
+
 void ArithmeticExpression::print(){
     if (left == NULL && right == NULL){
         cout << "E: " << exp << endl;
@@ -75,6 +139,13 @@ void ArithmeticExpression::print(){
 
 float ArithmeticExpression::convert (string){
     return 0.0f;
+}
+
+bool ArithmeticExpression::checkCharIs(char chr, string s){
+    for (unsigned int C = 0;C < s.length();C++)
+        if (s[C] == chr)
+            return true;
+    return false;
 }
 
 ArithmeticExpression::~ArithmeticExpression(){

@@ -1,6 +1,6 @@
 /*
 * Name: Joletta Cheung, Cameron Swinoga, Aleksander  Mercik
-* MacID: cheunj3, swinogca
+* MacID: cheunj3, swinogca, mercikaz
 * Student Number: 1406622, 1404603, 1413714
 * Description: This program takes a mathematical expression and outputs the answer
 */
