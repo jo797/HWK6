@@ -1,17 +1,22 @@
+#ifndef ARITHMETICEXPRESSION_H_
+#define ARITHMETICEXPRESSION_H_
+
 #include "Expression.h"
 #include <string>
 #include <stdexcept>
 
-#ifndef ARITHMETICEXPRESSION_H_
-#define ARITHMETICEXPRESSION_H_
-
 using namespace std;
+
+class Multiply;
+class Divide;
+class Add;
+class Subtract;
 
 class ArithmeticExpression : public Expression {
 
     public:
-        ArithmeticExpression *left;
-        ArithmeticExpression *right;
+        Expression *left;
+        Expression *right;
 
         ArithmeticExpression();
         ArithmeticExpression(string);
@@ -22,7 +27,7 @@ class ArithmeticExpression : public Expression {
         virtual ~ArithmeticExpression();
     private:
         void parseBrackets();
-        void parseExpression(string);
+        void parseExpression(char);
         bool checkCharIs(char, string);
 };
 #endif

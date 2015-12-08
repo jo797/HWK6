@@ -15,10 +15,10 @@ ArithmeticExpression::ArithmeticExpression(string s) : Expression::Expression(s)
 
 bool ArithmeticExpression::parse(){
     parseBrackets(); //BEDMAS
-    parseExpression("/");
-    parseExpression("*");
-    parseExpression("+");
-    parseExpression("-");
+    parseExpression('/');
+    parseExpression('*');
+    parseExpression('+');
+    parseExpression('-');
     /*parseDivision();
     parseMultiplication();
     parseAddition();
@@ -31,40 +31,43 @@ bool ArithmeticExpression::parse(){
 }*/
 
 void ArithmeticExpression::parseBrackets(){
-    int leftBracket = -1, rightBracket = -1;
+    int leftBracket = -1, rightBracket = -1, leftCount, rightCount;
+
     for (unsigned int C = 0;C < exp.length();C++){
         if (exp[C] == '('){
             leftBracket = C;
-            for (unsigned int i = C;i < exp.length();i++){
+            for (unsigned int i = C;i < exp.length() && leftCount != rightCount;i++){
                 if (exp[i] == ')'){
                     rightBracket = i;
+                    rightCount++;
                 }
             }
         }
     }
     if ((leftBracket == -1 && rightBracket != -1) || (rightBracket == -1 && leftBracket != -1))
         throw invalid_argument("Bracket mismatch error!");
-    if ((unsigned) rightBracket == exp.length()-1 && leftBracket != -1){ //Brackets around entire expression
+    if ((unsigned) rightBracket == exp.length()-1 && leftBracket == 0){ //Brackets around entire expression
         cout << "Unnecessary brackets L-> " << exp.substr(leftBracket+1, rightBracket-1) << endl;
         left = new ArithmeticExpression(exp.substr(leftBracket+1, rightBracket-1));
         right = NULL;
-        left->parseBrackets();
+        left->parse();
     } else if (leftBracket != -1 && rightBracket != -1) { //Inline brackets
         cout << "Inline brackets" << endl;
         cout << "L-> " << exp.substr(leftBracket+1, rightBracket-1) << endl;
         cout << "R-> " << exp.substr(rightBracket+1, exp.length()-1) << endl;
         left = new ArithmeticExpression(exp.substr(leftBracket+1, rightBracket-1));
         right = new ArithmeticExpression(exp.substr(rightBracket+1, exp.length()-1));
-        left->parseBrackets();
-        right->parseBrackets();
+        left->parse();
+        right->parse();
     } else if (leftBracket == -1 && rightBracket == -1){ //No brackets in expression
         cout << "No brackets L-> " << exp << endl;
         left = new ArithmeticExpression(exp);
         right = NULL;
+        left->parse();
     }
 }
 
-void ArithmeticExpression::parseExpression(string obj){
+void ArithmeticExpression::parseExpression(char obj){
     string lef = "", rig = "";
     size_t findPlace = exp.find(obj);
     if (findPlace != string::npos){
@@ -84,12 +87,33 @@ void ArithmeticExpression::parseExpression(string obj){
             }
         }
     }
-    //cout << "FUCK" << lef << obj << rig << endl;
     if (lef == "" && rig == ""){
         cout << "Could not find any " << obj << endl;
     } else {
         cout << lef << obj << rig << endl;
     }
+
+    switch (obj){
+        case '*':
+            left = new Expression();
+            break;
+        case '/':
+            left = new Divide();
+            break;
+        case '+':
+            left = new Add();
+            break;
+        case '-':
+            left = new Subtract();
+            break;
+        default:
+            left = NULL;
+            right = NULL;
+            throw invalid_argument("Arithmetic Expression error!");
+            break;
+    }
+    right = NULL;
+    left->parse();
 }
 /*
 void ArithmeticExpression::parseDivision(){
