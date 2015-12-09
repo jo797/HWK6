@@ -38,19 +38,27 @@ int ArithmeticExpression::indexOperator(string toCheck, string stringToCheck){
 }
 
 void ArithmeticExpression::clipEndBrackets(){
-    /*int bracketNum = 0;
+    int bracketNum = 0, depth = 0;
     for (unsigned int i = 0; i < ArithmeticExpression::curr.length(); i++){
-        cout << depth << " : " << ArithmeticExpression::curr.substr(i, 1) << endl;
-        if (ArithmeticExpression::curr.substr(i, 1) == "("){
-            depth+=1;
-        } else if (ArithmeticExpression::curr.substr(i, 1) == ")") {
-            depth=-1;
-        }
-        if (depth >= 2 || depth <= -2){
+        if (ArithmeticExpression::curr.substr(i, 1) == "(" || ArithmeticExpression::curr.substr(i, 1) == ")"){
+			bracketNum++;
+		}
+		if (ArithmeticExpression::curr.substr(i, 1) == "("){
+			depth++;
+		} else if (ArithmeticExpression::curr.substr(i, 1) == ")"){
+			depth--;
+		}
+		if (depth >= 2 || depth <= -2){
             ArithmeticExpression::curr = ArithmeticExpression::curr.substr(1, ArithmeticExpression::curr.length()-2);
             return;
-        }
-    }*/
+		}
+    }
+    //cout << bracketNum << endl;
+    //cout << ArithmeticExpression::curr.substr(0, 1) << " " << ArithmeticExpression::curr.substr(ArithmeticExpression::curr.length()-1, 1) << endl;
+    if (ArithmeticExpression::curr.substr(0, 1) == "(" && ArithmeticExpression::curr.substr(ArithmeticExpression::curr.length()-1, 1) == ")" && bracketNum == 2){
+        ArithmeticExpression::curr = ArithmeticExpression::curr.substr(1, ArithmeticExpression::curr.length()-2);
+        //cout << "clipping" << endl;
+    }
 }
 
 void ArithmeticExpression::setExp(string input){
@@ -61,7 +69,6 @@ void ArithmeticExpression::setExp(string input){
         ArithmeticExpression::isValue = true;
         return;
     }
-    cout << ArithmeticExpression::curr << endl;
     index[0] = indexOperator("-", ArithmeticExpression::curr);
     index[1] = indexOperator("+", ArithmeticExpression::curr);
     index[2] = indexOperator("*", ArithmeticExpression::curr);
