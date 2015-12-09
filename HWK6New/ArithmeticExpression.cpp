@@ -10,6 +10,14 @@
 
 using namespace std;
 
+//WHAT IM TRYING TO DO
+// Basically, evaluate should propagate thoughout the tree if its called from the oricinal expression. It should return a string/float if the expression is only a value (boolean) or tell its parts to
+// evaluate if not. Pretty much:
+// evaluate(){
+// return: number if you only have a number as string
+// else
+// return: (right expression.evaluate() as string converted to float (operator of your class, eg. "+", "-", ect...) left expression.evaluate() as string converted to float) as string
+//}
 string ArithmeticExpression::evaluate(){
     if (ArithmeticExpression::isValue){
         cout << "value" << endl;
