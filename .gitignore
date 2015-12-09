@@ -6,9 +6,4 @@
 /HWK6/obj
 HWK6/HWK6.cbp
 HWK6/HWK6.depend
-/HWK6New/Debug
-/HWK6New/bin
-/HWK6New/obj
-HWK6New/HWK6New.cbp
-HWK6New/HWK6New.depend
-*.layout
+*.depend
