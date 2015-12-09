@@ -2,3 +2,5 @@
 .project
 .settings
 /HWK6/Debug
+*.o
+HWK6/HWK6.depend
