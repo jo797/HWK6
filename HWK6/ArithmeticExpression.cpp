@@ -1,20 +1,22 @@
 #include <iostream>
 #include "ArithmeticExpression.h"
+#include <string>
+#include <stdlib.h>
 
 using namespace std;
 
 ArithmeticExpression::ArithmeticExpression() : Expression::Expression(){
-    left = NULL;
-    right = NULL;
+    //left = NULL;
+    //right = NULL;
 }
 
 ArithmeticExpression::ArithmeticExpression(string s) : Expression::Expression(s){
-    left = NULL;
-    right = NULL;
+    //left = NULL;
+    //right = NULL;
 }
 
 bool ArithmeticExpression::parse(){
-    parseBrackets(); //BEDMAS
+    /*parseBrackets(); //BEDMAS
     parseExpression('/');
     parseExpression('*');
     parseExpression('+');
@@ -31,7 +33,7 @@ bool ArithmeticExpression::parse(){
 }*/
 
 void ArithmeticExpression::parseBrackets(){
-    int leftBracket = -1, rightBracket = -1; int leftCount=0; int rightCount=0;
+    /*int leftBracket = -1, rightBracket = -1; int leftCount=0; int rightCount=0;
     for (unsigned int i = 0;i < exp.length();i++){//counting number of open brackets
         if (exp[i] == '('){
             leftCount++;
@@ -47,6 +49,8 @@ void ArithmeticExpression::parseBrackets(){
     if (leftCount !=rightCount)
         throw invalid_argument("Bracket mismatch error!");
     if ((unsigned) rightBracket == exp.length()-1 && leftBracket != -1){ //Brackets around entire expression
+        //Something
+    }
 
     if (leftCount == 0 && rightCount == 0){ //No brackets in expression
             cout << "No brackets L-> " << exp<< endl;
@@ -70,7 +74,7 @@ void ArithmeticExpression::parseBrackets(){
         cout << "Unnecessary brackets L-> " << exp.substr(leftBracket+1, rightBracket-1) << endl;
         left = new ArithmeticExpression(exp.substr(leftBracket+1, rightBracket-1));
         right = NULL;
-        left->parseBrackets();
+        //left->parseBrackets();
     } else if (leftBracket != -1 && rightBracket != -1) { //Inline brackets
     }
     else if (leftBracket != -1 && rightBracket != -1) { //Inline brackets
@@ -79,16 +83,17 @@ void ArithmeticExpression::parseBrackets(){
         cout << "R-> " << exp.substr(rightBracket+1, exp.length()-1) << endl;
         left = new ArithmeticExpression(exp.substr(leftBracket+1, rightBracket-1));
         right = new ArithmeticExpression(exp.substr(rightBracket+1, exp.length()-1));
-        left->parseBrackets();
-        right->parseBrackets();
+        //left->parseBrackets();
+        //right->parseBrackets();
     } else if (leftBracket == -1 && rightBracket == -1){ //No brackets in expression
         cout << "No brackets L-> " << exp << endl;
         left = new ArithmeticExpression(exp);
         right = NULL;
-    }
+    }*/
 }
 
-void ArithmeticExpression::parseExpression(string obj){    string lef = "", rig = "";
+void ArithmeticExpression::parseExpression(char obj){
+    /*string lef = "", rig = "";
     size_t findPlace = exp.find(obj);
     if (findPlace != string::npos){
         cout << "Find place: " << findPlace << endl;
@@ -134,6 +139,7 @@ void ArithmeticExpression::parseExpression(string obj){    string lef = "", rig 
     }
     right = NULL;
     left->parse();
+    */
 }
 /*
 void ArithmeticExpression::parseDivision(){
@@ -165,7 +171,7 @@ void ArithmeticExpression::parseSubtraction(){
 }*/
 
 void ArithmeticExpression::print(){
-    if (left == NULL && right == NULL){
+    /*if (left == NULL && right == NULL){
         cout << "E: " << exp << endl;
     } else if (left != NULL && right == NULL) {
         cout << "L: " << endl;
@@ -178,21 +184,21 @@ void ArithmeticExpression::print(){
         left->print();
         cout << "R: " << endl;
         right->print();
-    }
+    }*/
 }
 
-float ArithmeticExpression::convert (string){
-    return 0.0f;
+float ArithmeticExpression::convert (string s){
+    return atof (s.c_str());
 }
 
 bool ArithmeticExpression::checkCharIs(char chr, string s){
-    for (unsigned int C = 0;C < s.length();C++)
+    /*for (unsigned int C = 0;C < s.length();C++)
         if (s[C] == chr)
             return true;
-    return false;
+    return false;*/
 }
 
-ArithmeticExpression::~ArithmeticExpression(){
+//ArithmeticExpression::~ArithmeticExpression(){
     //delete left;
     //delete right;
-}
+//}

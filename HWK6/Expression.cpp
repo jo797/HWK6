@@ -3,22 +3,22 @@
 using namespace std;
 
 Expression::Expression() {
-    (*this).exp = "";
+    //(*this).exp = "";
 }
 
 Expression::Expression(string s) {
-    (*this).exp = s;
+    //(*this).exp = s;
 }
 
 string Expression::evaluate(){
-    cout << "Evaluating " << (*this).exp << endl;
-    return "";
+    //cout << "Evaluating " << (*this).exp << endl;
+    //return "";
 }
 
 void Expression::print(){
-    cout << exp << endl;
+    //cout << exp << endl;
 }
 
-Expression::~Expression() {
-
-}
+/*Expression::~Expression() {
+    //
+}*/
