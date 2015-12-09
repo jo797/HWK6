@@ -7,3 +7,7 @@
 /HWK6/obj
 HWK6/HWK6.cbp
 HWK6/HWK6.depend
+*.layout
+HWK6New/HWK6New.depend
+*.exe
+*.cbp
