@@ -1,4 +1,7 @@
 .cproject
 .project
 .settings
-/HWK6/Debug
+/HWK6/bin
+/HWK6/obj
+HWK6/HWK6.cbp
+HWK6/HWK6.depend
