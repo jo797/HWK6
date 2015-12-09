@@ -12,7 +12,9 @@ class ArithmeticExpression : public Expression {
     public:
         int indexOperator(string, string);
         bool checkOperator();
-        void clipEndBrackets();
+        string clipEndBrackets(string);
+
+        int operatorIndex = -1;
 
         Expression *left;
         Expression *right;
@@ -21,6 +23,6 @@ class ArithmeticExpression : public Expression {
         void print();
         float convert (string);
         string ftosconvert(float);
-        void setExp(string);
+        void setExp(string, int);
 };
 #endif

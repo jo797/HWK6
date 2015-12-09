@@ -7,6 +7,7 @@
 #include <string>
 #include <cstdlib>
 #include<sstream>
+#include <typeinfo>
 
 using namespace std;
 
@@ -19,15 +20,6 @@ using namespace std;
 // return: (right expression.evaluate() as string converted to float (operator of your class, eg. "+", "-", ect...) left expression.evaluate() as string converted to float) as string
 //}
 string ArithmeticExpression::evaluate(){
-    if (ArithmeticExpression::isValue){
-        cout << "value" << endl;
-        return ArithmeticExpression::curr;
-    } else{
-        cout << "ech" << endl;
-        cout << ArithmeticExpression::right->isValue << endl;
-        return "0";
-        return ArithmeticExpression::ftosconvert(ArithmeticExpression::convert(ArithmeticExpression::right->evaluate())+ArithmeticExpression::convert(ArithmeticExpression::left->evaluate()));
-    }
     return "0";
 }
 
@@ -45,82 +37,95 @@ int ArithmeticExpression::indexOperator(string toCheck, string stringToCheck){
     return -1;
 }
 
-void ArithmeticExpression::clipEndBrackets(){
-    int bracketNum = 0, depth = 0;
-    for (unsigned int i = 0; i < ArithmeticExpression::curr.length(); i++){
-        if (ArithmeticExpression::curr.substr(i, 1) == "(" || ArithmeticExpression::curr.substr(i, 1) == ")"){
-			bracketNum++;
-		}
-		if (ArithmeticExpression::curr.substr(i, 1) == "("){
-			depth++;
-		} else if (ArithmeticExpression::curr.substr(i, 1) == ")"){
-			depth--;
-		}
-		if (depth >= 2 || depth <= -2){
-            ArithmeticExpression::curr = ArithmeticExpression::curr.substr(1, ArithmeticExpression::curr.length()-2);
-            return;
-		}
+string ArithmeticExpression::clipEndBrackets(string input){
+    string in = input;
+    bool clipped = false;
+    while (!clipped){
+        int bracketNum = 0, depth = 0;
+        int indexCheck[4] = {indexOperator("-", in), indexOperator("+", in), indexOperator("*", in), indexOperator("/", in)};
+        if ((indexCheck[0] + indexCheck[0] + indexCheck[0] + indexCheck[0])!=-4){
+            return in;
+        }
+        for (unsigned int i = 0; i < in.length(); i++){
+            if (in.substr(i, 1) == "(" || in.substr(i, 1) == ")"){
+                bracketNum++;
+            }
+            if (in.substr(i, 1) == "("){
+                depth++;
+            } else if (in.substr(i, 1) == ")"){
+                depth--;
+            }
+            if (depth >= 2 || depth <= -2){
+                in = in.substr(1, in.length()-2);
+                clipped = true;
+                break;
+            }
+        }
+        if (in.substr(0, 1) == "(" && in.substr(in.length()-1, 1) == ")" && bracketNum == 2 && !clipped){
+            in = in.substr(1, in.length()-2);
+            clipped = true;
+            continue;
+        }
+        if (clipped){
+            clipped = false;
+            continue;
+        }
+        clipped = true;
     }
-    //cout << bracketNum << endl;
-    //cout << ArithmeticExpression::curr.substr(0, 1) << " " << ArithmeticExpression::curr.substr(ArithmeticExpression::curr.length()-1, 1) << endl;
-    if (ArithmeticExpression::curr.substr(0, 1) == "(" && ArithmeticExpression::curr.substr(ArithmeticExpression::curr.length()-1, 1) == ")" && bracketNum == 2){
-        ArithmeticExpression::curr = ArithmeticExpression::curr.substr(1, ArithmeticExpression::curr.length()-2);
-        //cout << "clipping" << endl;
-    }
+    return in;
 }
 
-void ArithmeticExpression::setExp(string input){
-    ArithmeticExpression::curr = input;
-    clipEndBrackets();
-    int index [4] = {-1, -1, -1, -1};
+void ArithmeticExpression::setExp(string input, int opIndex){
+    curr = input;
+    operatorIndex = opIndex;
+    curr = clipEndBrackets(curr);
     if (!checkOperator()){
-        ArithmeticExpression::isValue = true;
+        isValue = true;
         return;
     }
-    index[0] = indexOperator("-", ArithmeticExpression::curr);
-    index[1] = indexOperator("+", ArithmeticExpression::curr);
-    index[2] = indexOperator("*", ArithmeticExpression::curr);
-    index[3] = indexOperator("/", ArithmeticExpression::curr);
-    if (index[0] != -1){
-        string rightString = ArithmeticExpression::curr.substr(0, index[0]);
-        string leftString = ArithmeticExpression::curr.substr(index[0]+1, ArithmeticExpression::curr.length()-index[0]-1);
-        cout << rightString << " - " << leftString << endl;
+    string rightString = curr.substr(0, operatorIndex);
+    string leftString = curr.substr(operatorIndex+1, curr.length()-operatorIndex-1);
+    rightString = clipEndBrackets(rightString);
+    leftString = clipEndBrackets(leftString);
+    int rightIndexCheck[4] = {indexOperator("-", rightString), indexOperator("+", rightString), indexOperator("*", rightString), indexOperator("/", rightString)};
+    int leftIndexCheck[4] = {indexOperator("-", leftString), indexOperator("+", leftString), indexOperator("*", leftString), indexOperator("/", leftString)};
+
+    cout << rightString << " " << leftString << endl;
+
+    if (rightIndexCheck[0] != -1){
         Subtract R;
-        Subtract L;
-        ArithmeticExpression::left = &L;
-        ArithmeticExpression::right = &R;
-        R.setExp(rightString);
-        L.setExp(leftString);
-    } else if (index[1] != -1){
-        string rightString = ArithmeticExpression::curr.substr(0, index[1]);
-        string leftString = ArithmeticExpression::curr.substr(index[1]+1, ArithmeticExpression::curr.length()-index[1]-1);
-        cout << rightString << " + " << leftString << endl;
+        R.setExp(rightString, rightIndexCheck[0]);
+        right = &R;
+    } else if (rightIndexCheck[1] != -1){
         Add R;
-        Add L;
-        ArithmeticExpression::left = &L;
-        ArithmeticExpression::right = &R;
-        R.setExp(rightString);
-        L.setExp(leftString);
-    } else if (index[2] != -1){
-        string rightString = ArithmeticExpression::curr.substr(0, index[2]);
-        string leftString = ArithmeticExpression::curr.substr(index[2]+1, ArithmeticExpression::curr.length()-index[2]-1);
-        cout << rightString << " * " << leftString << endl;
+        R.setExp(rightString, rightIndexCheck[1]);
+        right = &R;
+    } else if (rightIndexCheck[2] != -1){
         Multiply R;
-        Multiply L;
-        ArithmeticExpression::left = &L;
-        ArithmeticExpression::right = &R;
-        R.setExp(rightString);
-        L.setExp(leftString);
-    } else if (index[3] != -1){
-        string rightString = ArithmeticExpression::curr.substr(0, index[3]);
-        string leftString = ArithmeticExpression::curr.substr(index[3]+1, ArithmeticExpression::curr.length()-index[3]-1);
-        cout << rightString << " / " << leftString << endl;
+        R.setExp(rightString, rightIndexCheck[2]);
+        right = &R;
+    } else if (rightIndexCheck[3] != -1){
         Divide R;
+        R.setExp(rightString, rightIndexCheck[3]);
+        right = &R;
+    }
+
+    if (leftIndexCheck[0] != -1){
+        Subtract L;
+        L.setExp(leftString, leftIndexCheck[0]);
+        left = &L;
+    } else if (leftIndexCheck[1] != -1){
+        Add L;
+        L.setExp(leftString, leftIndexCheck[1]);
+        left = &L;
+    } else if (leftIndexCheck[2] != -1){
+        Multiply L;
+        L.setExp(leftString, leftIndexCheck[2]);
+        left = &L;
+    } else if (leftIndexCheck[3] != -1){
         Divide L;
-        ArithmeticExpression::left = &L;
-        ArithmeticExpression::right = &R;
-        R.setExp(rightString);
-        L.setExp(leftString);
+        L.setExp(leftString, leftIndexCheck[3]);
+        left = &L;
     }
 }
 
