@@ -16,7 +16,7 @@ string Expression::evaluate(){
 }
 
 void Expression::print(){
-    cout << exp << endl;
+    cout << "Expressionprint" << exp << endl;
 }
 
 Expression::~Expression() {

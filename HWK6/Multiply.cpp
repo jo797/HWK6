@@ -5,4 +5,13 @@ string Multiply::evaluate(){
 }
 
 void Multiply::print(){
+    if (left != NULL && right != NULL){
+        cout << "(";
+        left->print();
+        cout << "*";
+        right->print();
+        cout << ")";
+    } else {
+        cout << exp;
+    }
 }

@@ -13,8 +13,7 @@ class Expression {
         Expression();
         Expression(string);
         string evaluate(); // evaluate expression and return string representation of the result.
-        void print(); // prints expression
-        virtual bool parse();
+        virtual void print(); // prints expression
         virtual ~Expression();
 };
 #endif
