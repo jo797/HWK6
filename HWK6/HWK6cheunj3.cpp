@@ -15,16 +15,16 @@
 
 using namespace std;
 
-bool checkCharIs(char, string);
+//bool checkCharIs(char, string);
 void parseBrackets(ArithmeticExpression **);
 void parseExpression(ArithmeticExpression **, char);
 
 void removeUnessessary (ArithmeticExpression **expr){
-    if ((*expr)->exp[0] == '(' && (*expr)->exp[(*expr)->exp.length()-1] == ')'){
+    /*if ((*expr)->exp[0] == '(' && (*expr)->exp[(*expr)->exp.length()-1] == ')'){
         (*expr)->exp.erase(0, 1);
         (*expr)->exp.erase((*expr)->exp.length()-1, 1);
-    }
-    for (int C = 0;C < (*expr)->exp.length();C++)
+    }*/
+    for (unsigned int C = 0;C < (*expr)->exp.length();C++)
         if ((*expr)->exp[C] == ' ')
             (*expr)->exp.erase(C, 1);
 }
@@ -72,8 +72,12 @@ void parseBrackets(ArithmeticExpression **expr){
     }
 }
 
-bool stringContains(string s, char c){
-    return s.find(c) != string::npos;
+int stringContains(string s, char c){
+    int count = 0;
+    for (unsigned int C = 0;C < s.length();C++)
+        if (s[C] == c)
+            count++;
+    return count;
 }
 
 void parseExpression(ArithmeticExpression **expr, char obj){
@@ -82,7 +86,7 @@ void parseExpression(ArithmeticExpression **expr, char obj){
     while (findPlace != string::npos && findPlace < (*expr)->exp.length()){
         lef = (*expr)->exp.substr(0, findPlace);
         rig = (*expr)->exp.substr(findPlace+1, (*expr)->exp.length());
-        if (stringContains(lef, '(') && !stringContains(lef, ')')){
+        if (stringContains(lef, '(') == 1 && stringContains(lef, ')') != 1){
             findPlace++;
             while ((*expr)->exp[findPlace] != obj && findPlace < (*expr)->exp.length())
                 findPlace++;
@@ -90,7 +94,9 @@ void parseExpression(ArithmeticExpression **expr, char obj){
             break;
         }
     }
-    if (findPlace == string::npos || (stringContains(lef, '(') && !stringContains(lef, ')')))
+    cout << "LEFT" << lef << endl;
+    cout << "RIGHT" << rig << endl;
+    if (findPlace == string::npos || (stringContains(lef, '(') != stringContains(lef, ')')))
         return;
 
     cout << "Converting " << (*expr)->exp << " to " << obj << " @ " << findPlace << endl;
@@ -128,19 +134,19 @@ void parseExpression(ArithmeticExpression **expr, char obj){
     }
 }
 
-bool checkCharIs(char chr, string s){
+/*bool checkCharIs(char chr, string s){
     for (unsigned int C = 0;C < s.length();C++)
         if (s[C] == chr)
             return true;
     return false;
-}
+}*/
 
 int main () {
     string input = "";
 
     while (input != "#"){
         cout << "Please enter an expression: ";
-        cin >> input;
+        getline(cin, input);
         ArithmeticExpression *inputExp = new ArithmeticExpression(input);//{input};
         try{
             parse(&inputExp);
