@@ -3,40 +3,40 @@
 
 using namespace std;
 
-ArithmeticExpression::ArithmeticExpression() : Expression::Expression(){
-    left = NULL;
-    right = NULL;
+ArithmeticExpression::ArithmeticExpression() : Expression::Expression(){ //Constructor when nothing is given
+    left = NULL; //If we just want a new object, first call the expression constructor
+    right = NULL; //Then set the left and right objects to null
 }
 
-ArithmeticExpression::ArithmeticExpression(string s) : Expression::Expression(s){
-    left = NULL;
-    right = NULL;
+ArithmeticExpression::ArithmeticExpression(string s) : Expression::Expression(s){ //Constructor when passing in a string
+    left = NULL; //First call the Expression constructor
+    right = NULL; //Then set the left and right objects to null
 }
 
-string ArithmeticExpression::evaluate(){
-    if (left != NULL)
-        return left->evaluate();
-    else if (right != NULL)
-        return right->evaluate();
-    else
-        return exp;
+string ArithmeticExpression::evaluate(){ //Evaluate override from Expression
+    if (left != NULL) //If there's a left branch
+        return left->evaluate(); //Evaluate the left branch
+    else if (right != NULL) //If there's a right branch
+        return right->evaluate(); //Evaluate the right branch
+    else //Else this is an end node
+        return exp; //Print the expression string
 }
 
-void ArithmeticExpression::print(){
-    if (left != NULL)
-        left->print();
-    else if (right != NULL)
-        right->print();
-    else
-        cout << exp;
+void ArithmeticExpression::print(){ //Print override from Expression
+    if (left != NULL) //If there's a left branch
+        left->print(); //Print the left branch
+    else if (right != NULL) //If there's a right branch
+        right->print(); //Print the right branch
+    else //Else this is an end node
+        cout << exp; //Print the expression string
 }
 
-void ArithmeticExpression::setLR(string L, string R){
+void ArithmeticExpression::setLR(string L, string R){ //Method to initialize the left and right Expression pointers from two strings
     left = new ArithmeticExpression(L);
     right = new ArithmeticExpression(R);
 }
 
-float ArithmeticExpression::convert (string s){
+float ArithmeticExpression::convert (string s){ //Function to convert a string to a float
     return stof(s, nullptr);
 }
 
