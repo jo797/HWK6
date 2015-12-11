@@ -165,7 +165,7 @@ int main (){
             parse(&inputExp);
             cout << endl << endl;
             inputExp->print();
-            cout << " = " << inputExp->evaluate() << endl;
+            cout << " = " << inputExp->convert(inputExp->evaluate()) << endl;
         } catch (const invalid_argument& e) {
             cout << "Error parsing input: " << e.what() << endl;
         }
