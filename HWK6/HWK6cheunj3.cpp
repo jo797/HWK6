@@ -203,28 +203,6 @@ void parseExpression(ArithmeticExpression **expr, char obj){
     }
 }
 
-void spaceCheck(string input){
-    string numbers = "0123456789";
-    string other = "()*-+/.";
-    char lastObject = input[0];
-    char nextObject;
-    bool shouldCheck = false;
-    for (int i = 1; i < input.length();i++){
-        nextObject = input[i];
-        if (stringContains(other, nextObject) != 0 || nextObject == ' '){
-            shouldCheck = true;
-        }
-        if (stringContains(numbers, lastObject) != 0 && stringContains(numbers, nextObject) !=0 && shouldCheck){
-            throw invalid_argument("Input Error! Spaces where they should'nt be"); //Throw an error
-            return;
-        }
-        if ((stringContains(other, nextObject) != 0 || stringContains(numbers, nextObject) != 0) && nextObject != ' '){
-            lastObject = nextObject;
-            shouldCheck = false;
-        }
-    }
-}
-
 int main (){
     string input = ""; //Empty input string to store the user input
     cout << fixed << setprecision(PRECISION); //Set the precision of outputted numbers
