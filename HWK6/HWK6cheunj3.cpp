@@ -12,6 +12,9 @@
 #include "Divide.h"
 #include "Add.h"
 #include "Subtract.h"
+#include <iomanip>
+
+#define PRECISION 2
 
 using namespace std;
 
@@ -81,26 +84,37 @@ int stringContains(string s, char c){
 
 void parseExpression(ArithmeticExpression **expr, char obj){
     string lef = "", rig = "";
-    size_t findPlace = (*expr)->exp.find(obj);
-    while (findPlace != string::npos && findPlace < (*expr)->exp.length()){
+    if ((*expr)->exp == ""){
+        cout << "Void expression" << endl;
+        return;
+    }
+    size_t  findPlace = (*expr)->exp.length()-1;
+    while (findPlace > 0){
         lef = (*expr)->exp.substr(0, findPlace);
         rig = (*expr)->exp.substr(findPlace+1, (*expr)->exp.length());
-        if (stringContains(lef, '(') == 1 && stringContains(lef, ')') != 1){
-            findPlace++;
-            while ((*expr)->exp[findPlace] != obj && findPlace < (*expr)->exp.length())
-                findPlace++;
-        } else {
-            break;
-        }
-    }
-    if (findPlace == string::npos || (stringContains(lef, '(') != stringContains(lef, ')')))
-        return;
 
-    cout << "Converting " << (*expr)->exp << " to " << obj << " @ " << findPlace << endl;
-    cout << "Left=" << lef << endl;
-    cout << "Right=" << rig << endl;
-    if (lef == "" && rig == "")
+        if (stringContains(rig, ')') != stringContains(rig, '(') || (*expr)->exp[findPlace] != obj)
+            findPlace--;
+        else if ((*expr)->exp[findPlace] == obj)
+            break;
+    }
+    if (findPlace == 0 && (*expr)->exp[findPlace] != obj){
+        cout << "NO " << obj << " in " << (*expr)->exp << endl;
         return;
+    }
+
+    if (findPlace == string::npos || (stringContains(lef, '(') != stringContains(lef, ')'))){
+        cout << "AAAAAAAAAAA" << endl;
+        cout << findPlace << endl;
+        cout << "L: " << lef << endl;
+        cout << "R: " << rig << endl;
+        return;
+    }
+
+    if (lef == "" && rig == ""){
+        cout << "Other void expression" << endl;
+        return;
+    }
 
     if (lef == "")
         lef = "0";
@@ -108,6 +122,10 @@ void parseExpression(ArithmeticExpression **expr, char obj){
         rig = "0";
     if ((lef == "" && rig != "") || (lef != "" && rig == ""))
         throw invalid_argument("Operator parsing error!");
+
+    cout << "Converting " << (*expr)->exp << " to " << obj << " @ " << findPlace << endl;
+    cout << "Left=" << lef << endl;
+    cout << "Right=" << rig << endl;
 
     switch (obj){
         case '*':
@@ -124,7 +142,7 @@ void parseExpression(ArithmeticExpression **expr, char obj){
             break;
         default:
             *expr = NULL;
-            throw invalid_argument("Operator parsing error!");
+            throw invalid_argument("Operator parsing error! (cannot find operator)");
             break;
     }
 
@@ -135,8 +153,9 @@ void parseExpression(ArithmeticExpression **expr, char obj){
     }
 }
 
-int main () {
+int main (){
     string input = "";
+    cout << fixed << setprecision(PRECISION);
 
     while (input != "#"){
         cout << "Please enter an expression: ";
