@@ -70,9 +70,10 @@ bool checkCharIs(char chr, string s){
 void removeUnessessary (ArithmeticExpression **expr){
     if (invalidSpace(expr)){
        	throw invalid_argument("Invalid Space error!");
+       	return;
     }
     for (unsigned int C = 0;C < (*expr)->exp.length();C++)
-        if ((*expr)->exp[C] == ' ')
+        if ((*expr)->exp[C] == ' ') // if there is a space
             (*expr)->exp.erase(C, 1);
 }
 
@@ -235,8 +236,7 @@ int main (){
         else
             inputExp->exp = getLastInput(inputs); //Create a new ArithmeticExpression object based on the user input
         try{
-            if (inputs.back() != "@")
-                parse(&inputExp); //Parse the top level of the inputed expression
+			if (inputs.back() != "@")                parse(&inputExp); //Parse the top level of the inputed expression
             cout << endl << endl;
 
             inputExp->print(); //Print out the expression tree

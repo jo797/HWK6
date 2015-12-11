@@ -10,7 +10,6 @@ class Add : public ArithmeticExpression {
     public:
         string evaluate() override;
         void print() override;
-        //void increment() override;
     private:
 };
 #endif
