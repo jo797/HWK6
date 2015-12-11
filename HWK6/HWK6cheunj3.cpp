@@ -15,7 +15,6 @@
 
 using namespace std;
 
-//bool checkCharIs(char, string);
 void parseBrackets(ArithmeticExpression **);
 void parseExpression(ArithmeticExpression **, char);
 
@@ -53,7 +52,7 @@ void parseBrackets(ArithmeticExpression **expr){
             rightBracket = i;
 
     if ((leftBracket == -1 && rightBracket != -1) || (leftBracket != -1 && rightBracket == -1))//One bracket is defined and the other is not!
-        ;//throw invalid_argument("Bracket Mismatch error!");
+        throw invalid_argument("Bracket Mismatch error!");
 
     if (leftBracket == -1 && rightBracket == -1){  //No brackets in expression
         cout << "No brackets -> " << (*expr)->exp << endl;
@@ -94,8 +93,6 @@ void parseExpression(ArithmeticExpression **expr, char obj){
             break;
         }
     }
-    cout << "LEFT" << lef << endl;
-    cout << "RIGHT" << rig << endl;
     if (findPlace == string::npos || (stringContains(lef, '(') != stringContains(lef, ')')))
         return;
 
@@ -104,8 +101,13 @@ void parseExpression(ArithmeticExpression **expr, char obj){
     cout << "Right=" << rig << endl;
     if (lef == "" && rig == "")
         return;
+
+    if (lef == "")
+        lef = "0";
+    if (rig == "")
+        rig = "0";
     if ((lef == "" && rig != "") || (lef != "" && rig == ""))
-        ;//throw invalid_argument("Operator parsing error!");
+        throw invalid_argument("Operator parsing error!");
 
     switch (obj){
         case '*':
@@ -129,17 +131,9 @@ void parseExpression(ArithmeticExpression **expr, char obj){
     if (expr != NULL){
         (*expr)->setLR(lef, rig);
         parse(&(*expr)->left);
-        cout << "Done left" << endl;
         parse(&(*expr)->right);
     }
 }
-
-/*bool checkCharIs(char chr, string s){
-    for (unsigned int C = 0;C < s.length();C++)
-        if (s[C] == chr)
-            return true;
-    return false;
-}*/
 
 int main () {
     string input = "";
