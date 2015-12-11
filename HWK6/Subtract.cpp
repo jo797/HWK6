@@ -11,7 +11,8 @@ string Subtract::evaluate(){
 void Subtract::print(){
     if (left != NULL && right != NULL){
         cout << "(";
-        left->print();
+        if (left->exp != "0")
+            left->print();
         cout << "-";
         right->print();
         cout << ")";

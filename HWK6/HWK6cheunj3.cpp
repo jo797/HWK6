@@ -103,6 +103,9 @@ void parseExpression(ArithmeticExpression **expr, char obj){
         return;
     }
 
+    lef = (*expr)->exp.substr(0, findPlace);
+    rig = (*expr)->exp.substr(findPlace+1, (*expr)->exp.length());
+
     if (findPlace == string::npos || (stringContains(lef, '(') != stringContains(lef, ')'))){
         cout << "AAAAAAAAAAA" << endl;
         cout << findPlace << endl;
@@ -120,57 +123,58 @@ void parseExpression(ArithmeticExpression **expr, char obj){
         lef = "0";
     if (rig == "")
         rig = "0";
-    if ((lef == "" && rig != "") || (lef != "" && rig == ""))
-        throw invalid_argument("Operator parsing error!");
 
     cout << "Converting " << (*expr)->exp << " to " << obj << " @ " << findPlace << endl;
     cout << "Left=" << lef << endl;
     cout << "Right=" << rig << endl;
 
-    switch (obj){
+    if ((lef == "" && rig != "") || (lef != "" && rig == ""))
+        throw invalid_argument("Operator parsing error!");
+
+    switch (obj){ //Switch based on what type of expression we want
         case '*':
-            *expr = new Multiply();
+            *expr = new Multiply(); //Change this to an appropriate object
             break;
         case '/':
-            *expr = new Divide();
+            *expr = new Divide(); //Change this to an appropriate object
             break;
         case '+':
-            *expr = new Add();
+            *expr = new Add(); //Change this to an appropriate object
             break;
         case '-':
-            *expr = new Subtract();
+            *expr = new Subtract(); //Change this to an appropriate object
             break;
-        default:
-            *expr = NULL;
-            throw invalid_argument("Operator parsing error! (cannot find operator)");
+        default: //If nothing matches
+            *expr = NULL; //This is an invalid expression
+            throw invalid_argument("Operator parsing error! (cannot find operator)"); //Throw an error
             break;
     }
 
-    if (expr != NULL){
-        (*expr)->setLR(lef, rig);
-        parse(&(*expr)->left);
-        parse(&(*expr)->right);
+    if (expr != NULL){ //Don't evaluate anything if the expression is NULL
+        (*expr)->setLR(lef, rig); //Make the left and right ArithmeticExpression objects  based on the left and right strings
+        parse(&(*expr)->left); //Parse the left side
+        parse(&(*expr)->right); //Parse the right size
     }
 }
 
 int main (){
-    string input = "";
-    cout << fixed << setprecision(PRECISION);
+    string input = ""; //Empty input string to store the user input
+    cout << fixed << setprecision(PRECISION); //Set the precision of outputted numbers
 
-    while (input != "#"){
+    while (input != "#"){ //Loop until the output is a #
         cout << "Please enter an expression: ";
-        getline(cin, input);
-        ArithmeticExpression *inputExp = new ArithmeticExpression(input);//{input};
+        getline(cin, input); //Get the user input
+        ArithmeticExpression *inputExp = new ArithmeticExpression(input); //Create a new ArithmeticExpression object based on the user input
         try{
-            parse(&inputExp);
+            parse(&inputExp); //Parse the top level of the inputed expression
             cout << endl << endl;
-            inputExp->print();
+            inputExp->print(); //Print out the expression tree
             cout << " = " << inputExp->convert(inputExp->evaluate()) << endl;
         } catch (const invalid_argument& e) {
-            cout << "Error parsing input: " << e.what() << endl;
+            cerr << "Error parsing input: " << e.what() << endl; //If there's an error, print out an error message
         }
     }
 
-	return 0;
+	return 0; //Exit success
 }
 
