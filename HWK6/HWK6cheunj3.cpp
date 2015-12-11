@@ -203,6 +203,28 @@ void parseExpression(ArithmeticExpression **expr, char obj){
     }
 }
 
+void spaceCheck(string input){
+    string numbers = "0123456789";
+    string other = "()*-+/.";
+    char lastObject = input[0];
+    char nextObject;
+    bool shouldCheck = false;
+    for (int i = 1; i < input.length();i++){
+        nextObject = input[i];
+        if (stringContains(other, nextObject) != 0 || nextObject == ' '){
+            shouldCheck = true;
+        }
+        if (stringContains(numbers, lastObject) != 0 && stringContains(numbers, nextObject) !=0 && shouldCheck){
+            throw invalid_argument("Input Error! Spaces where they should'nt be"); //Throw an error
+            return;
+        }
+        if ((stringContains(other, nextObject) != 0 || stringContains(numbers, nextObject) != 0) && nextObject != ' '){
+            lastObject = nextObject;
+            shouldCheck = false;
+        }
+    }
+}
+
 int main (){
     string input = ""; //Empty input string to store the user input
     cout << fixed << setprecision(PRECISION); //Set the precision of outputted numbers
@@ -210,8 +232,9 @@ int main (){
     while (input != "#"){ //Loop until the output is a #
         cout << "Please enter an expression: ";
         getline(cin, input); //Get the user input
-        ArithmeticExpression *inputExp = new ArithmeticExpression(input); //Create a new ArithmeticExpression object based on the user input
         try{
+            spaceCheck(input);
+            ArithmeticExpression *inputExp = new ArithmeticExpression(input); //Create a new ArithmeticExpression object based on the user input
             parse(&inputExp); //Parse the top level of the inputed expression
             cout << endl << endl;
             inputExp->print(); //Print out the expression tree
