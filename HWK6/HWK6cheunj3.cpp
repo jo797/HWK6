@@ -2,7 +2,7 @@
 * Name: Joletta Cheung, Cameron Swinoga, Aleksander  Mercik
 * MacID: cheunj3, swinogca, mercikaz
 * Student Number: 1406622, 1404603, 1413714
-* Description: This program takes a mathematical expression and outputs the answer
+* Description: This program takes a mathematical expression and outputs the answer. As of last use, this program was fully working, and could handle inputs such as (3*4) + ((3*4) + (7* (3*4)))
 */
 
 #include <iostream>
@@ -22,11 +22,11 @@ void parseBrackets(ArithmeticExpression **);
 void parseExpression(ArithmeticExpression **, char);
 bool checkCharIs(char, string);
 
-bool invalidSpace (ArithmeticExpression **expr){
+bool invalidSpace (ArithmeticExpression **expr){ // Check if there are invalid spaces
     string check = "1234567890";//string used to check if the char is a number
 	for (unsigned int i = 1; i < (*expr)->exp.length()-1;i++){//checking for spaces between numbers
 		if ((*expr)->exp[i] == ' '){//finding spaces in expression
-			bool left = true , right = true;
+			bool left = true , right = true; // variables
 			for (int j = i-1; j > -1; j--){//check to the left until it's not a space
 				if ((*expr)->exp[j] != ' '){//if there's not a space to the left of space(s)
 					if (checkCharIs((*expr)->exp[j], check)){//if it's a number
@@ -54,31 +54,32 @@ bool invalidSpace (ArithmeticExpression **expr){
 				}
 			}
 			if (left && right){//seeing if both sides of the space(s) are numbers
-				return true;
+				return true; //return true
 			}
 		}
 	}
-	return false;
+	return false; // otherwise return false when finished
 }
 
-bool checkCharIs(char chr, string s){
-    for (unsigned int C = 0;C < s.length();C++)
-        if (s[C] == chr)
-            return true;
-    return false;
+bool checkCharIs(char chr, string s){ // checks if character is contained within a string
+    for (unsigned int C = 0;C < s.length();C++) //for every character in the string
+        if (s[C] == chr) // if the characters are equal
+            return true; // return true, which ends the function
+    return false; // otherwise return false
 }
 
-void removeUnessessary (ArithmeticExpression **expr){
-    if (invalidSpace(expr)){
-       	throw invalid_argument("Invalid Space error!");
+void removeUnessessary (ArithmeticExpression **expr){ // Error checking and space removal from final
+    if (invalidSpace(expr)){ // if there are invalid spaces
+       	throw invalid_argument("Invalid Space error!"); //throw an exception
+       	return;
     }
-    for (unsigned int C = 0;C < (*expr)->exp.length();C++)
-        if ((*expr)->exp[C] == ' ')
-            (*expr)->exp.erase(C, 1);
+    for (unsigned int C = 0;C < (*expr)->exp.length();C++) // otherwise
+        if ((*expr)->exp[C] == ' ') // if there is a space
+            (*expr)->exp.erase(C, 1); //erase the character at that index
 }
 
 void parse(ArithmeticExpression **expr){ //BEDMAS reversed
-    removeUnessessary(expr);
+    removeUnessessary(expr); // Error checking and some formatting
     parseExpression(expr, '-');
     parseExpression(expr, '+');
     parseExpression(expr, '*');
@@ -120,12 +121,12 @@ void parseBrackets(ArithmeticExpression **expr){
     }
 }
 
-int stringContains(string s, char c){
-    int count = 0;
-    for (unsigned int C = 0;C < s.length();C++)
-        if (s[C] == c)
-            count++;
-    return count;
+int stringContains(string s, char c){ // Checking if a character is in a string
+    int count = 0; // Returns a count of the number of times the character appears in the string
+    for (unsigned int C = 0;C < s.length();C++) //For the length of the input string
+        if (s[C] == c) // if the characters are equal
+            count++; // increase the count
+    return count; // return
 }
 
 void parseExpression(ArithmeticExpression **expr, char obj){
@@ -211,7 +212,6 @@ int main (){
         cout << "Please enter an expression: ";
         getline(cin, input); //Get the user input
         try{
-            spaceCheck(input);
             ArithmeticExpression *inputExp = new ArithmeticExpression(input); //Create a new ArithmeticExpression object based on the user input
             parse(&inputExp); //Parse the top level of the inputed expression
             cout << endl << endl;
