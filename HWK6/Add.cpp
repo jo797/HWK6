@@ -19,3 +19,12 @@ void Add::print(){ // print function
         cout << exp; // print out the expression, ie. the value.
     }
 }
+
+/*void Add::increment(){
+    if (left != NULL) //If there's a left branch
+        left->increment(); //Increment the left branch
+    else if (right != NULL) //If there's a right branch
+        right->increment(); //Increment the right branch
+    else //Else this is an end node
+        exp = to_string(convert(exp)+1.0);
+}*/

@@ -6,6 +6,7 @@
 */
 
 #include <iostream>
+#include <vector>
 #include "Expression.h"
 #include "ArithmeticExpression.h"
 #include "Multiply.h"
@@ -30,7 +31,6 @@ bool invalidSpace (ArithmeticExpression **expr){
 			for (int j = i-1; j > -1; j--){//check to the left until it's not a space
 				if ((*expr)->exp[j] != ' '){//if there's not a space to the left of space(s)
 					if (checkCharIs((*expr)->exp[j], check)){//if it's a number
-                        cout << (*expr)->exp[j] << " is a number" << endl;
 						left = true;
 						break;
 					} else { //anything else (ex.operation)
@@ -44,7 +44,6 @@ bool invalidSpace (ArithmeticExpression **expr){
 				if ((*expr)->exp[k]!=' '){//if there's not a space to the right of space(s)
 				    cout << (*expr)->exp[k] << endl;
 					if (checkCharIs((*expr)->exp[k], check)){//if it's a number
-                        cout << (*expr)->exp[k] << " is a number" << endl;
 						right = true;
 						break;
 					} else { //anything else (ex.operation)
@@ -203,25 +202,48 @@ void parseExpression(ArithmeticExpression **expr, char obj){
     }
 }
 
-int main (){
-    string input = ""; //Empty input string to store the user input
-    cout << fixed << setprecision(PRECISION); //Set the precision of outputted numbers
+void printAndGet(string msg, vector<string> *values){ //Function for printing a message, and appending the value to a vector array
+    string input; //Input variable
+    cout << msg; //Output the message
+    getline(cin, input); //Get the user input
+    values -> push_back(input); //Append the input to the array
+}
 
-    while (input != "#"){ //Loop until the output is a #
-        cout << "Please enter an expression: ";
-        getline(cin, input); //Get the user input
+string getLastInput(vector<string> values){
+    for (int C = values.size()-1;C > 0;C--)
+        if (values.at(C) != "@" && values.at(C) != "#")
+            return values.at(C);
+    return "";
+}
+
+int main (){
+    vector<string> inputs;
+    inputs.push_back("");
+    cout << fixed << setprecision(PRECISION); //Set the precision of outputted numbers
+    ArithmeticExpression *inputExp = new ArithmeticExpression();
+
+    while (true){ //Loop until the output is a #
+        printAndGet("Please enter an expression: ", &inputs);
+        if (inputs.back() == "#")
+            return 0; //Exit success
+        if (inputs.back() == "@" && getLastInput(inputs) == ""){
+            cout << "You haven't inputted an expression yet!" << endl;
+            continue;
+        }
+        if (inputs.back() == "@")
+            inputExp->increment();
+        else
+            inputExp->exp = getLastInput(inputs); //Create a new ArithmeticExpression object based on the user input
         try{
-            spaceCheck(input);
-            ArithmeticExpression *inputExp = new ArithmeticExpression(input); //Create a new ArithmeticExpression object based on the user input
-            parse(&inputExp); //Parse the top level of the inputed expression
+            if (inputs.back() != "@")
+                parse(&inputExp); //Parse the top level of the inputed expression
             cout << endl << endl;
+
             inputExp->print(); //Print out the expression tree
             cout << " = " << inputExp->convert(inputExp->evaluate()) << endl;
         } catch (const invalid_argument& e) {
             cerr << "Error parsing input: " << e.what() << endl; //If there's an error, print out an error message
         }
     }
-
-	return 0; //Exit success
 }
 

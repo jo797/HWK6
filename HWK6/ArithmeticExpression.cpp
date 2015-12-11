@@ -31,6 +31,15 @@ void ArithmeticExpression::print(){ //Print override from Expression
         cout << exp; //Print the expression string
 }
 
+void ArithmeticExpression::increment(){
+    if (left != NULL) //If there's a left branch
+        left->increment(); //Increment the left branch
+    if (right != NULL) //If there's a right branch
+        right->increment(); //Increment the right branch
+    if (left == NULL && right == NULL && exp != "0") //Else this is an end node
+        exp = to_string((int)(convert(exp)+1.0));
+}
+
 void ArithmeticExpression::setLR(string L, string R){ //Method to initialize the left and right Expression pointers from two strings
     left = new ArithmeticExpression(L);
     right = new ArithmeticExpression(R);

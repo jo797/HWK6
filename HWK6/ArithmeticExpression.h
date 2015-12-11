@@ -20,6 +20,7 @@ class ArithmeticExpression : public Expression {
         ArithmeticExpression(string);
         virtual string evaluate(); //evaluate left expression and right expression
         virtual void print();
+        virtual void increment();
         float convert(string);
         void setLR(string, string);
         virtual ~ArithmeticExpression();
