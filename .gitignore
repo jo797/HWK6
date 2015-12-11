@@ -2,3 +2,8 @@
 .project
 .settings
 /HWK6/Debug
+*.layout
+HWK6/HWK6.cbp
+*.depend
+*.o
+*.exe
