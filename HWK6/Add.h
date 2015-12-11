@@ -8,7 +8,7 @@ using namespace std;
 
 class Add : public ArithmeticExpression {
     public:
-        string evaluate();
+        string evaluate() override;
         void print() override;
     private:
 };

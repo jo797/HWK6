@@ -1,7 +1,11 @@
 #include "Add.h"
 
 string Add::evaluate(){
-    return "";
+    if (left != NULL && right != NULL){
+        return to_string(convert(left->evaluate()) + convert(right->evaluate()));
+    } else {
+        return exp;
+    }
 }
 
 void Add::print(){

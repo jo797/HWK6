@@ -11,12 +11,12 @@ Expression::Expression(string s) {
 }
 
 string Expression::evaluate(){
-    cout << "Evaluating " << (*this).exp << endl;
+    cout << "Expression Evaluate" << (*this).exp << endl;
     return "";
 }
 
 void Expression::print(){
-    cout << "Expressionprint" << exp << endl;
+    cout << "Expression print" << exp << endl;
 }
 
 Expression::~Expression() {

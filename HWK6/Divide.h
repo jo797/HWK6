@@ -8,7 +8,7 @@ using namespace std;
 
 class Divide: public ArithmeticExpression {
     public:
-        string evaluate();
+        string evaluate() override;
         void print() override;
     private:
 };

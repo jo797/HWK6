@@ -18,7 +18,7 @@ class ArithmeticExpression : public Expression {
 
         ArithmeticExpression();
         ArithmeticExpression(string);
-        //string evaluate(); //evaluate left expression and right expression
+        virtual string evaluate(); //evaluate left expression and right expression
         virtual void print();
         float convert(string);
         void setLR(string, string);

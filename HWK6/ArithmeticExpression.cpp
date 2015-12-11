@@ -13,6 +13,15 @@ ArithmeticExpression::ArithmeticExpression(string s) : Expression::Expression(s)
     right = NULL;
 }
 
+string ArithmeticExpression::evaluate(){
+    if (left != NULL)
+        return left->evaluate();
+    else if (right != NULL)
+        return right->evaluate();
+    else
+        return exp;
+}
+
 void ArithmeticExpression::print(){
     if (left != NULL)
         left->print();
@@ -27,8 +36,8 @@ void ArithmeticExpression::setLR(string L, string R){
     right = new ArithmeticExpression(R);
 }
 
-float ArithmeticExpression::convert (string){
-    return 0.0f;
+float ArithmeticExpression::convert (string s){
+    return stof(s, nullptr);
 }
 
 ArithmeticExpression::~ArithmeticExpression(){
