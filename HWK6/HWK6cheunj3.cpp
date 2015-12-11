@@ -20,12 +20,58 @@ using namespace std;
 
 void parseBrackets(ArithmeticExpression **);
 void parseExpression(ArithmeticExpression **, char);
+bool checkCharIs(char, string);
+
+bool invalidSpace (ArithmeticExpression **expr){
+    string check = "1234567890";//string used to check if the char is a number
+	for (unsigned int i = 1; i < (*expr)->exp.length()-1;i++){//checking for spaces between numbers
+		if ((*expr)->exp[i] == ' '){//finding spaces in expression
+			bool left = true , right = true;
+			for (int j = i-1; j > -1; j--){//check to the left until it's not a space
+				if ((*expr)->exp[j] != ' '){//if there's not a space to the left of space(s)
+					if (checkCharIs((*expr)->exp[j], check)){//if it's a number
+                        cout << (*expr)->exp[j] << " is a number" << endl;
+						left = true;
+						break;
+					} else { //anything else (ex.operation)
+						left = false;
+						break;
+					}
+				}
+			}
+
+			for (unsigned int k = i+1; k < (*expr)->exp.length(); k++){//check to the left until it's not a space
+				if ((*expr)->exp[k]!=' '){//if there's not a space to the right of space(s)
+				    cout << (*expr)->exp[k] << endl;
+					if (checkCharIs((*expr)->exp[k], check)){//if it's a number
+                        cout << (*expr)->exp[k] << " is a number" << endl;
+						right = true;
+						break;
+					} else { //anything else (ex.operation)
+						right = false;
+						break;
+					}
+				}
+			}
+			if (left && right){//seeing if both sides of the space(s) are numbers
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool checkCharIs(char chr, string s){
+    for (unsigned int C = 0;C < s.length();C++)
+        if (s[C] == chr)
+            return true;
+    return false;
+}
 
 void removeUnessessary (ArithmeticExpression **expr){
-    /*if ((*expr)->exp[0] == '(' && (*expr)->exp[(*expr)->exp.length()-1] == ')'){
-        (*expr)->exp.erase(0, 1);
-        (*expr)->exp.erase((*expr)->exp.length()-1, 1);
-    }*/
+    if (invalidSpace(expr)){
+       	throw invalid_argument("Invalid Space error!");
+    }
     for (unsigned int C = 0;C < (*expr)->exp.length();C++)
         if ((*expr)->exp[C] == ' ')
             (*expr)->exp.erase(C, 1);
