@@ -57,24 +57,24 @@ bool invalidSpace (ArithmeticExpression **expr){
 			}
 		}
 	}
-	return false;
+	return false;//no spaces found
 }
 
-bool checkCharIs(char chr, string s){
-    for (unsigned int C = 0;C < s.length();C++)
-        if (s[C] == chr)
-            return true;
-    return false;
+bool checkCharIs(char chr, string s){//checking if a character matches any of the characters in a string
+    for (unsigned int C = 0;C < s.length();C++)//goes through the each character in the string
+        if (s[C] == chr) //checking if the characters match
+            return true;//match
+    return false;//not found
 }
 
 void removeUnessessary (ArithmeticExpression **expr){
-    if (invalidSpace(expr)){
-       	throw invalid_argument("Invalid Space error!");
+    if (invalidSpace(expr)){//checking for invalid space
+       	throw invalid_argument("Invalid Space error!");//error found
        	return;
     }
-    for (unsigned int C = 0;C < (*expr)->exp.length();C++)
+    for (unsigned int C = 0;C < (*expr)->exp.length();C++)//getting rid of all spaces in expression
         if ((*expr)->exp[C] == ' ') // if there is a space
-            (*expr)->exp.erase(C, 1);
+            (*expr)->exp.erase(C, 1);//erasing the spaces
 }
 
 void parse(ArithmeticExpression **expr){ //BEDMAS reversed
@@ -87,36 +87,36 @@ void parse(ArithmeticExpression **expr){ //BEDMAS reversed
 }
 
 void parseBrackets(ArithmeticExpression **expr){
-    int leftBracket = -1, rightBracket = -1;
+    int leftBracket = -1, rightBracket = -1;//initial values to indicate no brackets
 
     for (unsigned int i = 0; i < (*expr)->exp.length(); i++){ //Finding first open bracket
-        if ((*expr)->exp[i] == '('){
-            leftBracket = i;
+        if ((*expr)->exp[i] == '('){//if '(' is in the inputed expression
+            leftBracket = i;//sets to index of the '(' location
             break;
         }
     }
 
     for (unsigned int i =0; i < (*expr)->exp.length(); i++) //Finding last close bracket
-        if ((*expr)->exp[i] == ')')
-            rightBracket = i;
+        if ((*expr)->exp[i] == ')')//if ')' is in the inputed expression
+            rightBracket = i;//sets to index of the ')' location
 
-    if ((leftBracket == -1 && rightBracket != -1) || (leftBracket != -1 && rightBracket == -1))//One bracket is defined and the other is not!
-        throw invalid_argument("Bracket Mismatch error!");
+    if ((leftBracket == -1 && rightBracket != -1) || (leftBracket != -1 && rightBracket == -1))//One bracket is defined and the other is not
+        throw invalid_argument("Bracket Mismatch error!");//throw error
 
     if (leftBracket == -1 && rightBracket == -1){  //No brackets in expression
         cout << "No brackets -> " << (*expr)->exp << endl;
         return;
     } else if (leftBracket == 0 && (unsigned)rightBracket == (*expr)->exp.length()-1){  //Brackets around entire expression
-        cout << "Unnecessary brackets -> " << (*expr)->exp.substr(leftBracket+1, rightBracket-1) << endl;
-        (*expr)->left = new ArithmeticExpression((*expr)->exp.substr(leftBracket+1, rightBracket-1));
-        (*expr)->right = NULL;
-        parse(&(*expr)->left);
+        cout << "Unnecessary brackets -> " << (*expr)->exp.substr(leftBracket+1, rightBracket-1) << endl;//took out the unecessary brackets
+        (*expr)->left = new ArithmeticExpression((*expr)->exp.substr(leftBracket+1, rightBracket-1));//new expression in places to the left
+        (*expr)->right = NULL;//nothing on the right
+        parse(&(*expr)->left);//evaluates new expression
     } else if (leftBracket != -1 && rightBracket != -1){   //Inline brackets
         cout << "Inline brackets" << endl;
-        string inside = (*expr)->exp.substr(leftBracket+1, rightBracket-1);
-        string outside = (*expr)->exp.substr(rightBracket+2, (*expr)->exp.length()-1);
-        ArithmeticExpression *AE = new ArithmeticExpression(inside);
-        parse(&AE);
+        string inside = (*expr)->exp.substr(leftBracket+1, rightBracket-1);//substring of expression inside brackets
+        string outside = (*expr)->exp.substr(rightBracket+2, (*expr)->exp.length()-1);//substring of expression outside brackets
+        ArithmeticExpression *AE = new ArithmeticExpression(inside);//creates new object type ArithmeticExpression of inside expression
+        parse(&AE);//evaluates inside expression
     }
 }
 
