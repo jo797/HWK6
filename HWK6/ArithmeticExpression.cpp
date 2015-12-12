@@ -57,6 +57,6 @@ float ArithmeticExpression::convert (string s){ //Function to convert a string t
 }
 
 ArithmeticExpression::~ArithmeticExpression(){
-    //delete left;
-    //delete right;
+    delete left;
+    delete right;
 }
