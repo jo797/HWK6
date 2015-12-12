@@ -38,13 +38,13 @@ void ArithmeticExpression::print(){ //Print override from Expression
         cout << exp; //Print the expression string
 }
 
-void ArithmeticExpression::increment(){
+void ArithmeticExpression::increment(){ //Method to recursively increment all numbers
     if (left != NULL) //If there's a left branch
         left->increment(); //Increment the left branch
     if (right != NULL) //If there's a right branch
         right->increment(); //Increment the right branch
     if (left == NULL && right == NULL && exp != "0") //Else this is an end node
-        exp = to_string((int)(convert(exp)+1.0));
+        exp = to_string((int)(convert(exp)+1.0)); //Increment the current expression, after converting a bunch
 }
 
 void ArithmeticExpression::setLR(string L, string R){ //Method to initialize the left and right Expression pointers from two strings
@@ -53,10 +53,10 @@ void ArithmeticExpression::setLR(string L, string R){ //Method to initialize the
 }
 
 float ArithmeticExpression::convert (string s){ //Function to convert a string to a float
-    return stof(s, nullptr);
+    return stof(s, nullptr); //Return the converted value
 }
 
 ArithmeticExpression::~ArithmeticExpression(){
-    delete left;
-    delete right;
+    delete left; //Delete the left pointer
+    delete right; //Delete the right pointer
 }
