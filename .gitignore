@@ -2,8 +2,9 @@
 .project
 .settings
 /HWK6/Debug
+/HWK6/Release
 *.layout
-HWK6/HWK6.cbp
+*.cbp
 *.depend
 *.o
 *.exe
