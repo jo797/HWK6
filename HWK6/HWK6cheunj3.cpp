@@ -65,7 +65,7 @@ void removeUnnecessary (ArithmeticExpression **expr){
 }
 
 void parse(ArithmeticExpression **expr){ //BEDMAS reversed
-    removeUnnecessary(expr); //Remove unnecessary
+    removeUnnecessary(expr); //Remove unnecessary stuff
     parseExpression(expr, '+'); //Try to parse all of the addition operators
     parseExpression(expr, '-'); //Try to parse all of the subtraction operators
     parseExpression(expr, '*'); //Try to parse all of the multiplication operators
@@ -199,16 +199,15 @@ int main (){ //Main method
         if (inputs.back() == "@") //If the user wants to increment
             inputExp->increment(); //Increment the current expression
         else
-            inputExp->exp = getLastInput(inputs); //Create a new ArithmeticExpression object based on the user input
+            inputExp = new ArithmeticExpression(getLastInput(inputs)); //Create a new ArithmeticExpression object based on the user input
         try{
 			if (inputs.back() != "@") //Don't parse if we're just incrementing
                     parse(&inputExp); //Parse the top level of the inputed expression
-            cout << inputExp->exp << endl;
 
             inputExp->print(); //Print out the expression tree
             cout << " = " << inputExp->convert(inputExp->evaluate()) << endl;
         } catch (const invalid_argument &e) { //Catch an error that is given
-            cerr << endl << "Error parsing input: " << e.what() << endl; //If there's an error, print out an error message
+            cerr << endl << "Expression is not well formed (" << e.what() << ")" << endl; //If there's an error, print out an appropriate error message
             inputs.pop_back(); //Delete the invalid operator from the input array
         }
     }
