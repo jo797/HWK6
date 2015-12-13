@@ -24,31 +24,21 @@ void parseExpression(ArithmeticExpression **, char);
 bool checkCharIs(char, string);
 
 bool invalidSpace (ArithmeticExpression **expr){
-    string check = "1234567890";//string used to check if the char is a number
+    string validNumbers = "1234567890";//string used to check if the char is a number
 	for (unsigned int i = 1; i < (*expr)->exp.length()-1;i++){//checking for spaces between numbers
 		if ((*expr)->exp[i] == ' '){//finding spaces in expression
 			bool left = false , right = false; //Reset the boolean values both to true
 			for (int j = i-1; j > -1; j--){//check to the left until it's not a space
 				if ((*expr)->exp[j] != ' '){//if there's not a space to the left of space(s)
-					if (checkCharIs((*expr)->exp[j], check)){//if it's a number
-						left = true; //There is a number to the left
-						break; //Exit the loop
-					} else { //anything else (ex.operation)
-						left = false; //There is no number to the left
-						break; //Exit the loop
-					}
+                    left = checkCharIs((*expr)->exp[j], validNumbers); //
+                    break; //Exit the loop
 				}
 			}
 
 			for (unsigned int k = i+1; k < (*expr)->exp.length(); k++){//check to the left until it's not a space
 				if ((*expr)->exp[k]!=' '){//if there's not a space to the right of space(s)
-					if (checkCharIs((*expr)->exp[k], check)){//if it's a number
-						right = true;
-						break; //Exit the loop
-					} else { //anything else (ex.operation)
-						right = false;
-						break; //Exit the loop
-					}
+				    right = checkCharIs((*expr)->exp[k], validNumbers);
+                    break; //Exit the loop
 				}
 			}
 			if (left && right){//seeing if both sides of the space(s) are numbers
