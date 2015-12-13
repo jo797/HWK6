@@ -30,14 +30,14 @@ bool invalidSpace (ArithmeticExpression **expr){
 			bool left = false , right = false; //Reset the boolean values both to true
 			for (int j = i-1; j > -1; j--){//check to the left until it's not a space
 				if ((*expr)->exp[j] != ' '){//if there's not a space to the left of space(s)
-                    left = checkCharIs((*expr)->exp[j], validNumbers); //
+                    left = checkCharIs((*expr)->exp[j], validNumbers); //Store if the left character is a number or not
                     break; //Exit the loop
 				}
 			}
 
-			for (unsigned int k = i+1; k < (*expr)->exp.length(); k++){//check to the left until it's not a space
+			for (unsigned int k = i+1; k < (*expr)->exp.length(); k++){//check to the right until it's not a space
 				if ((*expr)->exp[k]!=' '){//if there's not a space to the right of space(s)
-				    right = checkCharIs((*expr)->exp[k], validNumbers);
+				    right = checkCharIs((*expr)->exp[k], validNumbers); //Store if the right character is a number or not
                     break; //Exit the loop
 				}
 			}
@@ -57,10 +57,8 @@ bool checkCharIs(char chr, string s){//checking if a character matches any of th
 }
 
 void removeUnnecessary (ArithmeticExpression **expr){
-    if (invalidSpace(expr)){//checking for invalid space
+    if (invalidSpace(expr))//checking for invalid space
        	throw invalid_argument("Invalid Space error!");//error found
-       	return;
-    }
     for (unsigned int C = 0;C < (*expr)->exp.length();C++)//getting rid of all spaces in expression
         if ((*expr)->exp[C] == ' ') // if there is a space
             (*expr)->exp.erase(C, 1);//erasing the spaces
@@ -185,7 +183,7 @@ string getLastInput(vector<string> values){ //Function for getting the last vali
 
 int main (){ //Main method
     vector<string> inputs; //Vector array to store the history of the input values
-    inputs.push_back(""); //Push back an initial operator
+    inputs.push_back(""); //Push back an initial string
     cout << fixed << setprecision(PRECISION); //Set the precision of outputted numbers
     ArithmeticExpression *inputExp = new ArithmeticExpression(); //Create a new empty ArithmeticExpression object
 

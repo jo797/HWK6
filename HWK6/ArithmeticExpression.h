@@ -5,6 +5,8 @@
 #include <string>
 #include <stdexcept>
 
+#define FLOATERRMSG "Can't convert expression to float"
+
 using namespace std;
 
 class ArithmeticExpression : public Expression { //Arithmetic Expression class, child of Expression, parent of Addition, Subtraction, Multiplication, Division

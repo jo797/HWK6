@@ -12,7 +12,7 @@ string Divide::evaluate(){ // Evaluation method
         try{
             return to_string(convert(left->evaluate()) / convert(right->evaluate())); // return this objects evaluation ie. (x / y) for division. calls evaluation for left and right objects.
         } catch (const invalid_argument &e) { //Float conversion error
-            throw invalid_argument("Arithmetic error");
+            throw invalid_argument(FLOATERRMSG);
         }
     } else { // if the evaluation is a value
         return exp; // return just the value
