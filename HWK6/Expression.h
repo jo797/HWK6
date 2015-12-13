@@ -10,10 +10,10 @@ class Expression {
     public:
         string exp;
 
-        Expression();
-        Expression(string);
-        virtual string evaluate(); // evaluate expression and return string representation of the result.
-        virtual void print(); // prints expression
-        virtual ~Expression();
+        Expression(); //Constructor
+        Expression(string); //Constructor
+        virtual string evaluate() = 0; //Pure virtual function to evaluate expression and return a string representation of the result
+        virtual void print() = 0; //Pure virtual function for printing expressions
+        virtual ~Expression(); //Destructor
 };
 #endif

@@ -6,10 +6,10 @@
 
 using namespace std;
 
-class Divide: public ArithmeticExpression {
+class Divide: public ArithmeticExpression { //Division class, child of ArithmeticExpression
     public:
-        string evaluate() override;
-        void print() override;
+        string evaluate() override; //Override the evaluate function from Arithmetic Expression
+        void print() override; //Override the print function from Arithmetic Expression
     private:
 };
 #endif

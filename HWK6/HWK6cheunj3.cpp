@@ -11,7 +11,7 @@
 #include "ArithmeticExpression.h"
 #include "Multiply.h"
 #include "Divide.h"
-#include "Add.h"
+#include "Addition.h"
 #include "Subtract.h"
 #include <iomanip>
 
@@ -27,7 +27,7 @@ bool invalidSpace (ArithmeticExpression **expr){
     string check = "1234567890";//string used to check if the char is a number
 	for (unsigned int i = 1; i < (*expr)->exp.length()-1;i++){//checking for spaces between numbers
 		if ((*expr)->exp[i] == ' '){//finding spaces in expression
-			bool left = true , right = true; //Reset the boolean values both to true
+			bool left = false , right = false; //Reset the boolean values both to true
 			for (int j = i-1; j > -1; j--){//check to the left until it's not a space
 				if ((*expr)->exp[j] != ' '){//if there's not a space to the left of space(s)
 					if (checkCharIs((*expr)->exp[j], check)){//if it's a number
@@ -78,8 +78,8 @@ void removeUnnecessary (ArithmeticExpression **expr){
 
 void parse(ArithmeticExpression **expr){ //BEDMAS reversed
     removeUnnecessary(expr); //Remove unnecessary
-    parseExpression(expr, '-'); //Try to parse all of the subtraction operators
     parseExpression(expr, '+'); //Try to parse all of the addition operators
+    parseExpression(expr, '-'); //Try to parse all of the subtraction operators
     parseExpression(expr, '*'); //Try to parse all of the multiplication operators
     parseExpression(expr, '/'); //Try to parse all of the division operators
     parseBrackets(&(*expr)); //Try to parse all of the brackets in the expression
@@ -161,7 +161,7 @@ void parseExpression(ArithmeticExpression **expr, char obj){ //Method for adding
             *expr = new Divide(); //Change this to an appropriate object
             break;
         case '+':
-            *expr = new Add(); //Change this to an appropriate object
+            *expr = new Addition(); //Change this to an appropriate object
             break;
         case '-':
             *expr = new Subtract(); //Change this to an appropriate object
@@ -201,6 +201,7 @@ int main (){ //Main method
 
     while (true){ //Infinite loop
         printAndGet("Please enter an expression: ", &inputs); //Push back the inputted expression to the expression vector
+
         if (inputs.back() == "#") //If the user wants to exit
             return 0; //Exit success
         if (inputs.back() == "@" && getLastInput(inputs) == ""){ //If the user wants to increment, and the last input isn't empty (uninitialized)
@@ -214,11 +215,12 @@ int main (){ //Main method
         try{
 			if (inputs.back() != "@") //Don't parse if we're just incrementing
                     parse(&inputExp); //Parse the top level of the inputed expression
+            cout << inputExp->exp << endl;
 
             inputExp->print(); //Print out the expression tree
             cout << " = " << inputExp->convert(inputExp->evaluate()) << endl;
-        } catch (const invalid_argument& e) { //Catch an error that is given
-            cerr << "Error parsing input: " << e.what() << endl; //If there's an error, print out an error message
+        } catch (const invalid_argument &e) { //Catch an error that is given
+            cerr << endl << "Error parsing input: " << e.what() << endl; //If there's an error, print out an error message
             inputs.pop_back(); //Delete the invalid operator from the input array
         }
     }

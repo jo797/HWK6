@@ -48,7 +48,7 @@ void ArithmeticExpression::increment(){ //Method to recursively increment all nu
 }
 
 void ArithmeticExpression::setLR(string L, string R){ //Method to initialize the left and right Expression pointers from two strings
-    left = new ArithmeticExpression(L);
+    left = new ArithmeticExpression(L); //Call the constructor with the respective strings
     right = new ArithmeticExpression(R);
 }
 
@@ -56,7 +56,7 @@ float ArithmeticExpression::convert (string s){ //Function to convert a string t
     return stof(s, nullptr); //Return the converted value
 }
 
-ArithmeticExpression::~ArithmeticExpression(){
+ArithmeticExpression::~ArithmeticExpression(){ //Destructor definition
     delete left; //Delete the left pointer
     delete right; //Delete the right pointer
 }

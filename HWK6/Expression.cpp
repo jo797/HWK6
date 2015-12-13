@@ -26,6 +26,5 @@ void Expression::print(){ // Expression printing
     cout << "Expression print" << exp << endl;
 }
 
-Expression::~Expression() {
-
+Expression::~Expression() { //Destructor
 }

@@ -9,7 +9,11 @@
 
 string Multiply::evaluate(){ // Evaluation function
     if (left != NULL && right != NULL){ // If the left and right expressions are not empty
-        return to_string(convert(left->evaluate()) * convert(right->evaluate())); // return this objects evaluation ie. (x * y) for multiplication. calls evaluation for left and right objects.
+        try{
+            return to_string(convert(left->evaluate()) * convert(right->evaluate())); // return this objects evaluation ie. (x * y) for multiplication. calls evaluation for left and right objects.
+        } catch (const invalid_argument &e) { //Float conversion error
+            throw invalid_argument("Arithmetic error");
+        }
     } else { // if the evaluation is a value
         return exp; // return just the value
     }
