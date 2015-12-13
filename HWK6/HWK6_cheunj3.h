@@ -1,5 +1,5 @@
-#ifndef HWK6CHEUNJ3_H_
-#define HWK6CHEUNJ3_H_
+#ifndef HWK6_CHEUNJ3_H_
+#define HWK6_CHEUNJ3_H_
 
 using namespace std;
 
@@ -9,4 +9,4 @@ public:
 	virtual ~HWK6_cheunj3();
 };
 
-#endif /* HWK6CHEUNJ3_H_ */
+#endif /* HWK6_CHEUNJ3_H_ */
