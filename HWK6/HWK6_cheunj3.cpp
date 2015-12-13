@@ -196,23 +196,19 @@ int main (){ //Main method
             cout << "You haven't inputted an expression yet!" << endl;
             continue; //Restart the loop
         }
-        if (inputs.back() == "@") //If the user wants to increment
-            try{
-                inputExp->increment(); //Increment the current expression
-            } catch (const invalid_argument &e) { //Catch an error that is given
-                cerr << endl << "Expression is not well formed (" << e.what() << ")" << endl; //If there's an error, print out an appropriate error message
-                continue; // Restart the loop
-            }
-        else
-            inputExp = new ArithmeticExpression(getLastInput(inputs)); //Create a new ArithmeticExpression object based on the user input
         try{
+            if (inputs.back() == "@") //If the user wants to increment
+                inputExp->increment(); //Increment the current expression
+            else
+                inputExp = new ArithmeticExpression(getLastInput(inputs)); //Create a new ArithmeticExpression object based on the user input
 			if (inputs.back() != "@") //Don't parse if we're just incrementing
-                    parse(&inputExp); //Parse the top level of the inputed expression
+                parse(&inputExp); //Parse the top level of the inputed expression
 
             inputExp->print(); //Print out the expression tree
             cout << " = " << inputExp->convert(inputExp->evaluate()) << endl;
         } catch (const invalid_argument &e) { //Catch an error that is given
             cerr << endl << "Expression is not well formed (" << e.what() << ")" << endl; //If there's an error, print out an appropriate error message
+            inputs.pop_back(); //Delete the invalid expression
         }
     }
 }
