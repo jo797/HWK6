@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="HWK6New" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/HWK6New" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="Add.cpp" />
+		<Unit filename="Add.h" />
+		<Unit filename="ArithmeticExpression.cpp" />
+		<Unit filename="ArithmeticExpression.h" />
+		<Unit filename="Divide.cpp" />
+		<Unit filename="Divide.h" />
+		<Unit filename="Expression.cpp" />
+		<Unit filename="Expression.h" />
+		<Unit filename="HWK6_cheunj3.cpp" />
+		<Unit filename="HWK6cheunj3.h" />
+		<Unit filename="Multiply.cpp" />
+		<Unit filename="Multiply.h" />
+		<Unit filename="Subtract.cpp" />
+		<Unit filename="Subtract.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

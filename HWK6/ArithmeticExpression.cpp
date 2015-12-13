@@ -7,6 +7,8 @@
 
 #include <iostream>
 #include "ArithmeticExpression.h"
+#include <string>
+#include <stdlib.h>
 
 using namespace std;
 

@@ -2,6 +2,7 @@
 #define ARITHMETICEXPRESSION_H_
 
 #include "Expression.h"
+
 #include <string>
 #include <stdexcept>
 
